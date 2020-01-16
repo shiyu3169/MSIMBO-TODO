@@ -7,10 +7,13 @@ import About from "./components/About";
 import Login from "./components/Login";
 import Register from "./components/Register";
 import Dashboard from "./components/Dashboard";
+import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
 
 function App() {
   return (
     <Router>
+      <Navbar />
       <Switch>
         <Route exact path="/">
           <Home />
@@ -28,6 +31,7 @@ function App() {
           <Dashboard />
         </Route>
       </Switch>
+      <Footer />
     </Router>
   );
 }
