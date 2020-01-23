@@ -40,4 +40,40 @@ router.post('/login', async (req, res) => {
   }
 });
 
+// Register
+router.post('/', async (req, res) => {
+  const newUser = new User({ ...req.body });
+  // Create salt & hash
+  bcrypt.genSalt(10, (err, salt) => {
+    if (err) {
+      throw err;
+    }
+    bcrypt.hash(newUser.password, salt, async (err, hash) => {
+      if (err) {
+        throw err;
+      }
+      newUser.password = hash;
+      const user = await newUser.save();
+      const payload = {
+        user: {
+          id: user.id
+        }
+      };
+      jwt.sign(
+        payload,
+        config.get('jwtSecret'),
+        {
+          expiresIn: '1d'
+        },
+        (err, token) => {
+          if (err) {
+            throw err;
+          }
+          res.json({ token, user });
+        }
+      );
+    });
+  });
+});
+
 module.exports = router;
