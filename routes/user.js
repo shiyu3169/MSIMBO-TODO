@@ -76,4 +76,11 @@ router.post('/', async (req, res) => {
   });
 });
 
+// Get User
+router.get('/:id', async (req, res) => {
+  const id = req.params.id;
+  const data = await User.findById(id, '-password').populate('image');
+  res.json(data);
+});
+
 module.exports = router;
