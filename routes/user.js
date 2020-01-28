@@ -76,4 +76,10 @@ router.post('/', async (req, res) => {
   });
 });
 
+router.get('/:id', async (req, res) => {
+  const id = req.params.id;
+  const user = await User.findById(id).populate('image');
+  res.json(user);
+});
+
 module.exports = router;
